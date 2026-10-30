@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus - Modern SaaS & Product Landing Page</title>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Alpine.js for lightweight reactivity -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-brand-500 selection:text-white" x-data="{ darkMode: true, mobileMenuOpen: false }">
+
+    <!-- Header / Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-slate-950/80 border-b border-slate-800/60 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <a href="#" class="flex items-center gap-2 group">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-400 flex items-center justify-center shadow-lg shadow-brand-500/30 group-hover:scale-105 transition-transform duration-300">
+                            <i data-lucide="layers" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400">
+                            Nexus<span class="text-brand-500">.</span>
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="#features" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Features</a>
+                    <a href="#solutions" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Solutions</a>
+                    <a href="#pricing" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Pricing</a>
+                    <a href="#testimonials" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Testimonials</a>
+                    <a href="#faq" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">FAQ</a>
+                </nav>
+
+                <!-- Action Buttons -->
+                <div class="hidden md:flex items-center gap-4">
+                    <a href="#" class="text-sm font-medium text-slate-300 hover:text-white transition-colors px-3 py-2">Sign In</a>
+                    <a href="#pricing" class="relative group overflow-hidden rounded-xl p-[1px] font-semibold text-sm">
+                        <span class="absolute inset-0 bg-gradient-to-r from-brand-500 to-indigo-500 group-hover:opacity-90 transition-opacity"></span>
+                        <span class="relative px-5 py-2.5 rounded-[11px] bg-slate-950 flex items-center gap-2 transition-all group-hover:bg-opacity-0">
+                            Get Started
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none">
+                        <i x-show="!mobileMenuOpen" data-lucide="menu" class="w-6 h-6"></i>
+                        <i x-show="mobileMenuOpen" data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div x-show="mobileMenuOpen" 
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 -translate-y-4"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 translate-y-0"
+             x-transition:leave-end="opacity-0 -translate-y-4"
+             class="md:hidden bg-slate-900/95 border-b border-slate-800 px-4 pt-2 pb-6 space-y-3">
+            <a href="#features" @click="mobileMenuOpen = false" class="block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">Features</a>
+            <a href="#solutions" @click="mobileMenuOpen = false" class="block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">Solutions</a>
+            <a href="#pricing" @click="mobileMenuOpen = false" class="block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">Pricing</a>
+            <a href="#testimonials" @click="mobileMenuOpen = false" class="block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">Testimonials</a>
+            <a href="#faq" @click="mobileMenuOpen = false" class="block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">FAQ</a>
+            <div class="pt-4 border-t border-slate-800 flex flex-col gap-3">
+                <a href="#" class="w-full text-center py-2.5 rounded-xl border border-slate-700 text-sm font-medium hover:bg-slate-800">Sign In</a>
+                <a href="#pricing" class="w-full text-center py-2.5 rounded-xl bg-brand-600 text-sm font-medium hover:bg-brand-500 shadow-lg shadow-brand-600/30">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 md:pt-44 md:pb-32 overflow-hidden">
+        <!-- Glow Effects -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute top-1/3 left-1/3 w-[300px] h-[300px] bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto">
+                <!-- Badge -->
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-500/30 bg-brand-500/10 text-brand-300 text-xs sm:text-sm font-medium mb-8 backdrop-blur-sm">
+                    <span class="flex h-2 w-2 rounded-full bg-brand-400 animate-pulse"></span>
+                    <span>Introducing Nexus v2.0 Platform</span>
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </div>
+
+                <!-- Main Title -->
+                <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-none mb-6">
+                    Build faster with <br class="hidden sm:inline" />
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-brand-400 via-indigo-300 to-purple-400">
+                        Intelligent Automation
+                    </span>
+                </h1>
+
+                <!-- Subtitle -->
+                <p class="text-base sm:text-xl text-slate-400 mb-10 leading-relaxed font-normal">
+                    Empower your product development workflow with high-performance tools, seamless cloud integration, and real-time analytics.
+                </p>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#pricing" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-semibold shadow-lg shadow-brand-500/25 transition-all duration-200 transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                        <span>Start Free Trial</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#demo" class="w-full sm:w-auto px-8 py-4 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800/80 text-slate-300 hover:text-white font-semibold backdrop-blur-sm transition-all duration-200 flex items-center justify-center gap-2">
+                        <i data-lucide="play-circle" class="w-5 h-5 text-brand-400"></i>
+                        <span>Watch Demo</span>
+                    </a>
+                </div>
+
+                <!-- Key Benefits List -->
+                <div class="mt-12 flex flex-wrap justify-center items-center gap-6 text-xs sm:text-sm text-slate-400">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+                        <span>No credit card required</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+                        <span>14-day free trial</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+                        <span>Cancel anytime</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Mockup/Preview -->
+            <div class="mt-16 sm:mt-20 relative max-w-5xl mx-auto">
+                <div class="rounded-2xl border border-slate-800 bg-slate-900/90 p-2 shadow-2xl backdrop-blur-sm relative overflow-hidden group">
+                    <!-- Window Controls Mockup -->
+                    <div class="flex items-center justify-between px-4 py-3 border-b border-slate-800/80 bg-slate-950/60 rounded-t-xl">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded-full bg-rose-500/80"></div>
+                            <div class="w-3 h-3 rounded-full bg-amber-500/80"></div>
+                            <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+                        </div>
+                        <div class="text-xs font-mono text-slate-500 bg-slate-900 px-3 py-1 rounded-md border border-slate-800">
+                            nexus-dashboard.app
+                        </div>
+                        <div class="w-12"></div>
+                    </div>
+                    <!-- Dashboard Preview Content -->
+                    <div class="p-4 sm:p-6 bg-slate-950/40 grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="md:col-span-2 space-y-4">
+                            <div class="h-48 sm:h-64 rounded-xl bg-gradient-to-br from-slate-900 to-slate-800/60 p-4 border border-slate-800/80 relative overflow-hidden flex flex-col justify-between">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <span class="text-xs text-slate-400 font-medium">Performance Analytics</span>
+                                        <h4 class="text-lg font-bold text-white">$48,290.00</h4>
+                                    </div>
+                                    <span class="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded-full border border-emerald-500/20 font-medium">+18.4%</span>
+                                </div>
+                                <!-- Mock Chart Bars -->
+                                <div class="flex items-end gap-2 h-32 pt-6">
+                                    <div class="w-full bg-brand-500/20 hover:bg-brand-500/40 rounded-t h-[40%] transition-all"></div>
+                                    <div class="w-full bg-brand-500/30 hover:bg-brand-500/50 rounded-t h-[65%] transition-all"></div>
+                                    <div class="w-full bg-brand-500/20 hover:bg-brand-500/40 rounded-t h-[50%] transition-all"></div>
+                                    <div class="w-full bg-brand-500/50 hover:bg-brand-500/70 rounded-t h-[85%] transition-all"></div>
+                                    <div class="w-full bg-brand-500/40 hover:bg-brand-500/60 rounded-t h-[70%] transition-all"></div>
+                                    <div class="w-full bg-brand-500/80 hover:bg-brand-500 rounded-t h-[95%] transition-all"></div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex items-center gap-3">
+                                    <div class="p-2.5 rounded-lg bg-indigo-500/10 text-indigo-400">
+                                        <i data-lucide="users" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-slate-400">Active Users</p>
+                                        <p class="text-base font-bold">12,450</p>
+                                    </div>
+                                </div>
+                                <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex items-center gap-3">
+                                    <div class="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400">
+                                        <i data-lucide="zap" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-slate-400">Conversion Rate</p>
+                                        <p class="text-base font-bold">4.85%</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 space-y-3">
+                                <h5 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Live System Logs</h5>
+                                <div class="space-y-2 text-xs font-mono">
+                                    <div class="p-2 rounded bg-slate-950 text-slate-300 flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                        <span class="truncate">Deployment #402 Success</span>
+                                    </div>
+                                    <div class="p-2 rounded bg-slate-950 text-slate-300 flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+                                        <span class="truncate">API Response: 24ms</span>
+                                    </div>
+                                    <div class="p-2 rounded bg-slate-950 text-slate-300 flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full bg-brand-400"></span>
+                                        <span class="truncate">Sync completed (1,200 items)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trusted Logos Section -->
+    <section class="py-12 border-y border-slate-800/60 bg-slate-950/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-xs font-semibold text-slate-500 uppercase tracking-widest mb-8">
+                Trusted by thousands of innovative teams worldwide
+            </p>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 items-center justify-items-center opacity-60 grayscale hover:grayscale-0 transition-all">
+                <div class="flex items-center gap-2 font-bold text-lg"><i data-lucide="triangle" class="w-6 h-6 text-brand-500"></i> ACME Corp</div>
+                <div class="flex items-center gap-2 font-bold text-lg"><i data-lucide="shield" class="w-6 h-6 text-indigo-500"></i> SecureScale</div>
+                <div class="flex items-center gap-2 font-bold text-lg"><i data-lucide="cpu" class="w-6 h-6 text-purple-500"></i> Quantum AI</div>
+                <div class="flex items-center gap-2 font-bold text-lg"><i data-lucide="globe" class="w-6 h-6 text-emerald-500"></i> GlobalNet</div>
+                <div class="flex items-center gap-2 font-bold text-lg col-span-2 md:col-span-1"><i data-lucide="box" class="w-6 h-6 text-amber-500"></i> CubeData</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid Section -->
+    <section id="features" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold text-brand-400 uppercase tracking-widest mb-3">Core Features</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">Everything you need to scale your application</p>
+                <p class="text-slate-400 text-base sm:text-lg">Designed for developers, built for enterprise scalability and lightning-fast deployment.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-brand-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group">
+                    <div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="zap" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Ultra Fast Performance</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Lightning-fast response times with optimized global edge network delivery and sub-millisecond database queries.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-brand-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="shield-check" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Enterprise Security</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">End-to-end encryption, SOC2 compliance, role-based access controls, and automated security threat scanning.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-brand-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="bar-chart-3" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Real-time Analytics</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Gain actionable insights with custom dashboard widgets, live event streaming, and detailed user reports.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-brand-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="cpu" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">AI Engine Driven</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Automate repetitive workflows and optimize resources using advanced machine learning models built right in.</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-brand-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="git-branch" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Seamless Integrations</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Connect effortlessly with GitHub, Slack, Figma, AWS, and hundreds of webhooks out of the box.</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-brand-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group">
+                    <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="headphones" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">24/7 Expert Support</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Dedicated engineering support team available around the clock to help solve your complex technical issues.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section (with Monthly/Annual Toggle) -->
+    <section id="pricing" class="py-24 bg-slate-900/30 border-t border-slate-800/80" x-data="{ billingPeriod: 'annual' }">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-xs font-bold text-brand-400 uppercase tracking-widest mb-3">Transparent Pricing</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">Choose the plan that fits your growth</p>
+                <p class="text-slate-400 text-base sm:text-lg">No hidden fees, simple upgrades, and full transparency.</p>
+
+                <!-- Billing Toggle Switch -->
+                <div class="mt-8 inline-flex items-center bg-slate-900 p-1.5 rounded-xl border border-slate-800">
+                    <button @click="billingPeriod = 'monthly'" 
+                            :class="billingPeriod === 'monthly' ? 'bg-brand-600 text-white shadow-md' : 'text-slate-400 hover:text-white'"
+                            class="px-5 py-2 rounded-lg text-sm font-medium transition-all duration-200">
+                        Monthly
+                    </button>
+                    <button @click="billingPeriod = 'annual'" 
+                            :class="billingPeriod === 'annual' ? 'bg-brand-600 text-white shadow-md' : 'text-slate-400 hover:text-white'"
+                            class="px-5 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2">
+                        Annual 
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full uppercase font-bold border border-emerald-500/30">Save 20%</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pricing Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+                <!-- Starter Card -->
+                <div class="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition-all">
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Starter</h3>
+                        <p class="text-sm text-slate-400 mb-6">Perfect for solo creators and side projects.</p>
+                        <div class="mb-6">
+                            <span class="text-4xl font-extrabold text-white" x-text="billingPeriod === 'annual' ? '$15' : '$19'">$15</span>
+                            <span class="text-slate-400 text-sm"> / month</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-slate-300 mb-8">
+                            <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Up to 3 Projects</li>
+                            <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> 10GB Cloud Storage</li>
+                            <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Basic Analytics</li>
+                            <li class="flex items-center gap-3 text-slate-500"><i data-lucide="x" class="w-4 h-4"></i> Custom Domain</li>
+                            <li class="flex items-center gap-3 text-slate-500"><i data-lucide="x" class="w-4 h-4"></i> 24/7 Priority Support</li>
+                        </ul>
+                    </div>
+                    <a href="#" class="w-full py-3 rounded-xl border border-slate-700 hover:bg-slate-800 text-center text-sm font-semibold text-white transition-colors">Start Free Trial</a>
+                </div>
+
+                <!-- Pro Card (Featured) -->
+                <div class="p-8 rounded-2xl bg-slate-900 border-2 border-brand-500 relative flex flex-col justify-between shadow-2xl shadow-brand-500/10">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-brand-500 to-indigo-500 text-white text-xs font-bold uppercase tracking-wider shadow-lg">
+                        Most Popular
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Pro Team</h3>
+                        <p class="text-sm text-slate-400 mb-6">Ideal for growing teams and startups.</p>
+                        <div class="mb-6">
+                            <span class="text-4xl font-extrabold text-white" x-text="billingPeriod === 'annual' ? '$49' : '$59'">$49</span>
+                            <span class="text-slate-400 text-sm"> / month</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-slate-300 mb-8">
+                            <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Unlimited Projects</li>
+                            <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> 250GB Cloud Storage</li>
+                            <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Advanced Real-time Analytics</li>
+                            <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Custom Domain Integration</li>
+                            <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Email & Chat Support</li>
+                        </ul>
+                    </div>
+                    <a href="#" class="w-full py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-center text-sm font-semibold text-white shadow-lg shadow-brand-600/30 transition-all">Get Started Today</a>
+                </div>
+
+                <!-- Enterprise Card -->
+                <div class="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition-all">
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Enterprise</h3>
+                        <p class="text-sm text-slate-400 mb-6">Custom features and dedicated infrastructure.</p>
+                        <div class="mb-6">
+                            <span class="text-4xl font-extrabold text-white" x-text="billingPeriod === 'annual' ? '$199' : '$249'">$199</span>
+                            <span class="text-slate-400 text-sm"> / month</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-slate-300 mb-8">
+                            <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Unlimited Storage & Users</li>
+                            <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Custom AI Model Training</li>
+                            <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> SLA Guarantee 99.99%</li>
+                            <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Dedicated Account Manager</li>
+                            <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> 24/7 Phone & Priority Support</li>
+                        </ul>
+                    </div>
+                    <a href="#" class="w-full py-3 rounded-xl border border-slate-700 hover:bg-slate-800 text-center text-sm font-semibold text-white transition-colors">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Accordion Section -->
+    <section id="faq" class="py-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-xs font-bold text-brand-400 uppercase tracking-widest mb-3">FAQ</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Frequently Asked Questions</p>
+            </div>
+
+            <div class="space-y-4" x-data="{ activeAccordion: null }">
+                <!-- Item 1 -->
+                <div class="border border-slate-800 rounded-xl bg-slate-900/40 overflow-hidden">
+                    <button @click="activeAccordion = activeAccordion === 1 ? null : 1" class="w-full p-6 text-left flex justify-between items-center font-semibold text-white hover:text-brand-400 transition-colors">
+                        <span>Can I change my plan later?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-200" :class="activeAccordion === 1 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="activeAccordion === 1" x-collapse class="px-6 pb-6 text-slate-400 text-sm leading-relaxed">
+                        Yes, you can upgrade or downgrade your plan at any time from your account settings. Upgrades take effect immediately, while downgrades apply at the end of your current billing cycle.
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="border border-slate-800 rounded-xl bg-slate-900/40 overflow-hidden">
+                    <button @click="activeAccordion = activeAccordion === 2 ? null : 2" class="w-full p-6 text-left flex justify-between items-center font-semibold text-white hover:text-brand-400 transition-colors">
+                        <span>Is there a free trial available?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-200" :class="activeAccordion === 2 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="activeAccordion === 2" x-collapse class="px-6 pb-6 text-slate-400 text-sm leading-relaxed">
+                        Yes, we offer a 14-day free trial with full access to all features. No credit card is required to sign up.
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="border border-slate-800 rounded-xl bg-slate-900/40 overflow-hidden">
+                    <button @click="activeAccordion = activeAccordion === 3 ? null : 3" class="w-full p-6 text-left flex justify-between items-center font-semibold text-white hover:text-brand-400 transition-colors">
+                        <span>How secure is my data on Nexus?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-200" :class="activeAccordion === 3 ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="activeAccordion === 3" x-collapse class="px-6 pb-6 text-slate-400 text-sm leading-relaxed">
+                        Security is our top priority. All data is encrypted in transit using TLS 1.3 and at rest using AES-256 encryption. We are SOC2 Type II certified and compliant with GDPR standards.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Banner -->
+    <section class="py-20 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="rounded-3xl bg-gradient-to-r from-brand-700 via-indigo-700 to-purple-800 p-8 sm:p-16 text-center relative overflow-hidden shadow-2xl">
+                <!-- Background Glow -->
+                <div class="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-white mb-6 tracking-tight">
+                    Ready to accelerate your workflow?
+                </h2>
+                <p class="text-indigo-100 text-base sm:text-lg max-w-2xl mx-auto mb-8 font-light">
+                    Join thousands of teams building high-impact software faster than ever before.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto">
+                    <input type="email" placeholder="Enter your work email" class="px-5 py-3.5 rounded-xl text-slate-900 bg-white/95 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-white w-full text-sm">
+                    <button class="px-6 py-3.5 rounded-xl bg-slate-950 text-white font-semibold hover:bg-slate-900 transition-colors text-sm whitespace-nowrap shadow-lg">
+                        Get Started Free
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/80 bg-slate-950 pt-16 pb-12 text-slate-400 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+                <div class="col-span-2">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-600 to-indigo-400 flex items-center justify-center">
+                            <i data-lucide="layers" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <span class="text-lg font-bold text-white">Nexus</span>
+                    </div>
+                    <p class="text-slate-400 max-w-sm mb-6 text-sm">
+                        Building the modern foundation for high-performance software engineering teams around the globe.
+                    </p>
+                    <div class="flex items-center gap-4 text-slate-400">
+                        <a href="#" class="hover:text-white transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                        <a href="#" class="hover:text-white transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+                        <a href="#" class="hover:text-white transition-colors"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Product</h4>
+                    <ul class="space-y-2.5">
+                        <li><a href="#features" class="hover:text-white transition-colors">Features</a></li>
+                        <li><a href="#pricing" class="hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Integrations</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Changelog</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2.5">
+                        <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">API Reference</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Community</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Guides</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2.5">
+                        <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-slate-800/60 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
+                <p>&copy; 2026 Nexus Inc. All rights reserved.</p>
+                <div class="flex items-center gap-6">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-white transition-colors">Security</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
